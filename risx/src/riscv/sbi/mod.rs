@@ -4,9 +4,6 @@ pub mod base;
 /// Console debug extension
 pub mod debug_console;
 
-/// Hart state management extension
-pub mod hart_state_management;
-
 /// Inter-processor interrupt extension
 pub mod ipi;
 
@@ -41,3 +38,6 @@ pub enum ErrorType {
     AlreadyStopped = -8,
     NoSharedMemory = -9,
 }
+
+/// Utilities
+pub mod util;
