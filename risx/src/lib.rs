@@ -1,6 +1,6 @@
 #![no_std]
 
-use crate::riscv::sbi::console_debug::write;
+use crate::riscv::sbi::debug_console::write;
 
 /// This module includes RISC-V specific functionality.
 pub mod riscv;

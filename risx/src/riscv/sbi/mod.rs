@@ -2,7 +2,7 @@
 pub mod base;
 
 /// Console debug extension
-pub mod console_debug;
+pub mod debug_console;
 
 /// Hart state management extension
 pub mod hart_state_management;
