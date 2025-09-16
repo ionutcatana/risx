@@ -19,10 +19,11 @@ pub fn write(message: &str) -> Result<(), ErrorType> {
     }
 
     match result.error {
+        0 => Ok(()),
         -1 => Err(ErrorType::Failed),
         -3 => Err(ErrorType::InvalidParam),
         -4 => Err(ErrorType::Denied),
-        _ => Ok(()),
+        _ => panic!(),
     }
 }
 
@@ -34,10 +35,11 @@ pub fn read(buffer: &mut [u8], num_bytes: usize) -> Result<(), ErrorType> {
     }
 
     match result.error {
+        0 => Ok(()),
         -1 => Err(ErrorType::Failed),
         -3 => Err(ErrorType::InvalidParam),
         -4 => Err(ErrorType::Denied),
-        _ => Ok(()),
+        _ => panic!(),
     }
 }
 
@@ -48,8 +50,9 @@ pub fn write_byte(byte: u8) -> Result<(), ErrorType> {
     }
 
     match result.error {
+        0 => Ok(()),
         -1 => Err(ErrorType::Failed),
         -4 => Err(ErrorType::Denied),
-        _ => Ok(()),
+        _ => panic!(),
     }
 }
