@@ -1,0 +1,486 @@
+[
+  {
+    // Base Extension (EID #0x10)
+    // The base extension is designed to be as small as possible.
+    // No error returns defined.
+    "name": "base extension",
+    "eid": "0x10",
+    "functions": [
+      {
+        // Returns the current SBI specification version.
+        // The minor number is encoded in the low 24 bits
+        // The major number is encoded in the next 7 bits.
+        "name": "sbi_get_spec_version",
+        "fid": 0,
+        "args": null
+      },
+      {
+        // Returns the current SBI implementation ID
+        "name": "sbi_get_impl_id",
+        "fid": 1,
+        "args": null
+      },
+      {
+        // Returns the current SBI implementation version.
+        "name": "sbi_get_impl_version",
+        "fid": 2,
+        "args": null
+      },
+      {
+        // Returns non-zero value if EID is available
+        "name": "sbi_probe_extension",
+        "fid": 3,
+        "args": [
+          {
+            "name": "extension_id",
+            "type": "long"
+          }
+        ]
+      },
+      {
+        // Machine vendor ID
+        // Returns `mvendorid` CSR value or 0
+        "name": "sbi_get_mvendorid",
+        "fid": 4,
+        "args": null
+      },
+      {
+        // Machine architecture ID
+        // Returns `marchid` CSR value or 0
+        "name": "sbi_get_marchid",
+        "fid": 5,
+        "args": null
+      },
+      {
+        // Machine implementation ID
+        // Returns `mimpid` CSR value or 0
+        "name": "sbi_get_mimpid",
+        "fid": 6,
+        "args": null
+      }
+    ]
+  },
+  {
+    // Timer Extension (EID #0x54494D45 "TIME")
+    "name": "timer extension",
+    "eid": "0x54494D45",
+    "functions": [
+      {
+        // Programs the clock for next event after stime_value time.
+        // stime_value is in absolute time.
+        "name": "sbi_set_timer",
+        "fid": 0,
+        "args": [
+          {
+            "name": "stime_value",
+            "type": "uint64_t"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    // Extension (EID #0x735049 "sPI: s-mode IPI")
+    "name": "ipi extension",
+    "eid": "0x735049",
+    "functions": [
+      {
+        // Send a supervisor software interrupt to the harts in hart_mask
+        "name": "sbi_send_ipi",
+        "fid": 0,
+        "args": [
+          {
+            "name": "hart_mask",
+            "type": "unsigned long"
+          },
+          {
+            "name": "hart_mask_base",
+            "type": "unsigned long"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    // RFENCE Extension (EID #0x52464E43 "RFNC")
+    // Operations apply to the entire address space if either
+    // - start_addr == size == 0
+    // - size == 2^XLEN - 1
+    "name": "rfence extension",
+    "eid": "0x52464E43",
+    "functions": [
+      {
+        // Instructs remote harts to execute `FENCE.I` instruction.
+        "name": "sbi_remote_fence_i",
+        "fid": 0,
+        "args": [
+          {
+            "name": "hart_mask",
+            "type": "unsigned long"
+          },
+          {
+            "name": "hart_mask_base",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        // Instructs the remote harts to execute one or more `SFENCE.VMA`
+        // instructions, covering the range of virtual addresses between
+        // start_addr and start_addr + size.
+        "name": "sbi_remote_sfence_vma",
+        "fid": 1,
+        "args": [
+          {
+            "name": "hart_mask",
+            "type": "unsigned long"
+          },
+          {
+            "name": "hart_mask_base",
+            "type": "unsigned long"
+          },
+          {
+            "name": "start_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "size",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        // Instructs the remote harts to execute one or more `SFENCE.VMA`
+        // instructions. This covers only the given ASID.
+        "name": "sbi_remote_sfence_vma_asid",
+        "fid": 2,
+        "args": [
+          {
+            "name": "hart_mask",
+            "type": "unsigned long"
+          },
+          {
+            "name": "hart_mask_base",
+            "type": "unsigned long"
+          },
+          {
+            "name": "start_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "size",
+            "type": "unsigned long"
+          },
+          {
+            "name": "asid",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        // Instruct the remote harts to execute one or more HFENCE.GVMA
+        // instructions, only for the given VMID
+        "name": "sbi_remote_hfence_gvma_vmid",
+        "fid": 3,
+        "args": [
+          {
+            "name": "hart_mask",
+            "type": "unsigned long"
+          },
+          {
+            "name": "hart_mask_base",
+            "type": "unsigned long"
+          },
+          {
+            "name": "start_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "size",
+            "type": "unsigned long"
+          },
+          {
+            "name": "vmid",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        // Instruct the remote harts to execute one or more HFENCE.GVMA
+        // instructions for all the guests.
+        "name": "sbi_remote_hfence_gvma",
+        "fid": 4,
+        "args": [
+          {
+            "name": "hart_mask",
+            "type": "unsigned long"
+          },
+          {
+            "name": "hart_mask_base",
+            "type": "unsigned long"
+          },
+          {
+            "name": "start_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "size",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        "name": "sbi_remote_hfence_vvma_asid",
+        "fid": 5,
+        "args": [
+          {
+            "name": "hart_mask",
+            "type": "unsigned long"
+          },
+          {
+            "name": "hart_mask_base",
+            "type": "unsigned long"
+          },
+          {
+            "name": "start_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "size",
+            "type": "unsigned long"
+          },
+          {
+            "name": "asid",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        "name": "sbi_remote_hfence_vvma",
+        "fid": 6,
+        "args": [
+          {
+            "name": "hart_mask",
+            "type": "unsigned long"
+          },
+          {
+            "name": "hart_mask_base",
+            "type": "unsigned long"
+          },
+          {
+            "name": "start_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "size",
+            "type": "unsigned long"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    // Hart State Management Extension (EID #0x48534D "HSM")
+    // Allow the supervisor-mode software to request hart state changes
+    "name": "hart state management extension",
+    "eid": "0x48534D",
+    "functions": [
+      {
+        // start executing the target hart in supervisor-mode, at the address
+        // specified by start_addr, with these specific register values:
+        // - satp = 0
+        // - sstatus.SIE = 0
+        // - a0 = hartid
+        // - a1 = opaque parameter
+        "name": "sbi_hart_start",
+        "fid": 0,
+        "args": [
+          {
+            "name": "hartid",
+            "type": "unsigned long"
+          },
+          {
+            "name": "start_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "opaque",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        // stop executing the calling hart. not expected to return
+        // _must_ be called with supervisor-mode interrupts disabled.
+        "name": "sbi_hart_stop",
+        "fid": 1,
+        "args": null
+      },
+      {
+        // get the current status
+        "name": "sbi_hart_get_status",
+        "fid": 2,
+        "args": [
+          {
+            "name": "hartid",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        // put the calling hart in a platform specific suspend. Upon resuming
+        // from non-retentive suspend state, the hart will jump to
+        // supervisor-mode at address specified by resume_addr with specific
+        // register values:
+        // - satp = 0
+        // - sstatus.SIE = 0
+        // - a0 = hartid
+        // - a1 = opaque parameter
+        // *MMU will be off
+        "name": "sbi_hart_suspend",
+        "fid": 3,
+        "args": [
+          {
+            "name": "suspend_type",
+            "type": "uint32_t"
+          },
+          {
+            "name": "resume_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "opaque",
+            "type": "unsigned long"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    // System Reset Extension (EID #0x53525354 "SRST")
+    // allow the supervisor software to request system-level reboot or shutdown.
+    "name": "system reset extension",
+    "eid": "0x53525354",
+    "functions": [
+      {
+        "name": "sbi_system_reset",
+        "fid": 0,
+        "args": [
+          {
+            "name": "reset_type",
+            "type": "uint32_t"
+          },
+          {
+            "name": "reset_reason",
+            "type": "uint32_t"
+          }
+        ]
+      }
+    ]
+  },
+  // {
+  // Performance Monitoring Unit Extension (EID #0x504D55 "PMU")
+  // event_idx[19:16] = type
+  // event_idx[15:0] = code
+  // ** NO BINDING **
+  // }
+  {
+    // Debug Console Extension (EID #0x4442434E "DBCN")
+    // boot-time early prints from supervisor-mode software
+    "name": "console debug extension",
+    "eid": "0x4442434E",
+    "functions": [
+      {
+        // Write bytes to the debug console from input memory.
+        // may do partial/no writes
+        "name": "sbi_debug_console_write",
+        "fid": 0,
+        "args": [
+          {
+            "name": "num_bytes",
+            "type": "unsigned long"
+          },
+          {
+            "name": "base_addr_lo",
+            "type": "unsigned long"
+          },
+          {
+            "name": "base_addr_hi",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        // Read bytes from the debug console into an output memory
+        // The num_bytes parameter specifies the maximum number of bytes which
+        // can be written into the output memory.
+        "name": "sbi_debug_console_read",
+        "fid": 1,
+        "args": [
+          {
+            "name": "num_bytes",
+            "type": "unsigned long"
+          },
+          {
+            "name": "base_addr_lo",
+            "type": "unsigned long"
+          },
+          {
+            "name": "base_addr_hi",
+            "type": "unsigned long"
+          }
+        ]
+      },
+      {
+        // Write a single byte to the debug console
+        // This is a blocking SBI call and it will only return after writing
+        // the specified byte
+        "name": "sbi_debug_console_write_byte",
+        "fid": 2,
+        "args": [
+          {
+            "name": "byte",
+            "type": "uint8_t"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    // System Suspend Extension (EID #0x53555350 "SUSP")
+    "name": "system suspend extension",
+    "eid": "0x53555350",
+    "functions": [
+      {
+        "name": "sbi_system_suspend",
+        "fid": 0,
+        "args": [
+          {
+            "name": "sleep_type",
+            "type": "uint32_t"
+          },
+          {
+            "name": "resume_addr",
+            "type": "unsigned long"
+          },
+          {
+            "name": "opaque",
+            "type": "unsigned long"
+          }
+        ]
+      }
+    ]
+  }
+  // {
+  // CPPC Extension (EID #0x43505043 "CPPC")
+  // ** NO BINDING **
+  // }
+  // {
+  // Nested Acceleration Extension (EID #0x4E41434C "NACL")
+  // ** NO BINDING **
+  // }
+  // {
+  // Steal-time Accounting Extension (EID #0x535441 "STA")
+  // ** NO BINDING **
+  // }
+]

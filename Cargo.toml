@@ -1,0 +1,3 @@
+[workspace]
+members = ["risx", "userland/init", "userland/shell", "userland/utilities"]
+resolver = "3"
