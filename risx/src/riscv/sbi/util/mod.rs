@@ -82,7 +82,7 @@ pub fn extension_check() {
         write("N\n").unwrap()
     }
 
-    write("STAC: ").unwrap();
+    write("STA: ").unwrap();
     if probe_extension(Extension::StealTimeAccounting).unwrap() {
         write("Y\n").unwrap()
     } else {
