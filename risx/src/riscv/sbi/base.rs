@@ -30,6 +30,7 @@ pub enum Extension {
     RemoteFence = 0x52464E43,
     HartStateManagement = 0x48534D,
     SystemReset = 0x53525354,
+    PerformanceMonitoringUnit = 0x504D55,
     ConsoleDebug = 0x4442434E,
     SystemSuspend = 0x53555350,
     CollaborativeProcessorPerformanceControl = 0x43505043,
@@ -73,7 +74,7 @@ pub fn probe_extension(extension: Extension) -> Result<bool, ErrorType> {
         result = sbi_probe_extension(extension as isize);
     }
 
-    Ok(!result.value == 0)
+    Ok(result.value != 0)
 }
 
 pub fn get_mvendorid() -> Result<isize, ErrorType> {
