@@ -1,5 +1,6 @@
-RISX is a work in progress operating system that targets 64-bit RISC-V computers
-and conforms to the RISC-V SBI specification, version 2.0.
+RISX (pronounced "risks") is a work in progress operating system that targets
+64-bit RISC-V computers and conforms to the RISC-V SBI specification, version
+2.0.
 
 RISX is free software; it is distributed under a frankenstein license.
 
