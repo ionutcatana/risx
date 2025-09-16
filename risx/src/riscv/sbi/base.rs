@@ -26,12 +26,15 @@ pub enum ImplementationId {
 pub enum Extension {
     Base = 0x10,
     Timer = 0x54494D45,
-    IPI = 0x735049,
+    InterProcessorInterrupt = 0x735049,
     RemoteFence = 0x52464E43,
     HartStateManagement = 0x48534D,
     SystemReset = 0x53525354,
     ConsoleDebug = 0x4442434E,
     SystemSuspend = 0x53555350,
+    CollaborativeProcessorPerformanceControl = 0x43505043,
+    NestedAcceleration = 0x4E41434C,
+    StealTimeAccounting = 0x535441,
 }
 
 pub fn get_spec_version() -> Result<(isize, isize), ErrorType> {
