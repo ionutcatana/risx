@@ -1,23 +1,35 @@
-// This module includes Rust bindings for OpenSBI calls.
-// Each submodule corresponds to an SBI extension.
-
+/// Base extension (mandatory for all SBI implementations)
 pub mod base;
+
+/// Console debug extension
 pub mod console_debug;
+
+/// Hart state management extension
 pub mod hart_state_management;
-// pub mod ipi;
-// pub mod rfence;
-// pub mod system_reset;
-// pub mod system_suspend;
-// pub mod timer;
+
+/// Inter-processor interrupt extension
+pub mod ipi;
+
+/// Remote fence extension
+pub mod rfence;
+
+/// System reset extension
+pub mod system_reset;
+
+/// Timer extension
+pub mod timer;
 
 #[repr(C)]
+/// C struct representing the return value of an SBI call
 pub struct SbiRet {
     value: isize,
     error: isize,
 }
 
-// An ECALL with an unsupported EID or FID must return NotSupported
 #[derive(Debug)]
+/// SBI error codes
+///
+/// An ECALL with an unsupported EID or FID must return NotSupported
 pub enum ErrorType {
     Failed = -1,
     NotSupported = -2,
@@ -28,19 +40,4 @@ pub enum ErrorType {
     AlreadyStarted = -7,
     AlreadyStopped = -8,
     NoSharedMemory = -9,
-}
-
-pub enum ResetType {
-    Shutdown = 0,
-    ColdReboot = 1,
-    WarmReboot = 2,
-}
-
-pub enum ResetReason {
-    NoReason = 0,
-    SystemFailure = 1,
-}
-
-pub enum SleepType {
-    SuspendToRAM = 0,
 }
