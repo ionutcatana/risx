@@ -22,8 +22,8 @@ pub mod timer;
 #[repr(C)]
 /// C struct representing the return value of an SBI call
 pub struct SbiRet {
-    value: isize,
     error: isize,
+    value: isize,
 }
 
 #[derive(Debug)]
