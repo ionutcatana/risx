@@ -39,12 +39,9 @@ SECTIONS
 
     . = ALIGN(16);
 
-    /* Allocate 4 stacks of 1MB each */
+    /* Allocate 1MB stack */
     PROVIDE ( _stack_top = . );
     _stack0 = . + 0x100000;
-    _stack1 = . + 0x200000;
-    _stack2 = . + 0x300000;
-    _stack3 = . + 0x400000;
 
     /* Free memory starts after the kernel */
     PROVIDE ( _end = . );
